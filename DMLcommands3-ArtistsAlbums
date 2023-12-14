@@ -1,0 +1,243 @@
+DML exercise
+Tables:
+
+Albums:
+
+Columns: AlbumID (Primary Key), Title, ReleaseYear, Genre, Price, StockQuantity 
+
+mysql> CREATE TABLE Albums(
+    -> AlbumId INT PRIMARY KEY,
+    -> Title VARCHAR(100),
+    -> ReleaseYear INT,
+    -> Genre VARCHAR(50),
+    -> Price DECIMAL(10,2),
+    -> StockQuantity INT);
+
+Artists:
+
+Columns: ArtistID (Primary Key), ArtistName, Country
+
+mysql> CREATE TABLE Artists(
+    -> ArtistID INT PRIMARY KEY,
+    -> ArtistName VARCHAR(100),
+    -> Country VARCHAR(50)
+    -> );
+
+
+Exercise Tasks: note: add some data entries before fetching it
+
+mysql> INSERT INTO Albums VALUES
+    -> (1, 'Album1', 2021, 'Pop', 15.99, 100),
+    -> (2, 'Album2', 2020, 'Rock', 12.50, 75),
+    -> (3, 'Album3', 2019, 'Hip Hop', 18.75, 120),
+    -> (4, 'Album4', 2022, 'Electronic', 20.00, 90),
+    -> (5, 'Album5', 2018, 'R&B', 14.25, 80);
+
+mysql> SELECT * FROM Albums;
++---------+--------+-------------+------------+-------+---------------+
+| AlbumId | Title  | ReleaseYear | Genre      | Price | StockQuantity |
++---------+--------+-------------+------------+-------+---------------+
+|       1 | Album1 |        2021 | Pop        | 15.99 |           100 |
+|       2 | Album2 |        2020 | Rock       | 12.50 |            75 |
+|       3 | Album3 |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4 |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5 |        2018 | R&B        | 14.25 |            80 |
++---------+--------+-------------+------------+-------+---------------+
+
+mysql> INSERT INTO Artist VALUES
+    -> (1, 'Artist1', 'Country1'),
+    -> (2, 'Artist2', 'Country2'),
+    -> (3, 'Artist3', 'Country3'),
+    -> (4, 'Artist4', 'Country4'),
+    -> (5, 'Artist5', 'Country5');
+
+mysql> SELECT * FROM Artists;
++----------+------------+----------+
+| ArtistID | ArtistName | Country  |
++----------+------------+----------+
+|        1 | Artist1    | Country1 |
+|        2 | Artist2    | Country2 |
+|        3 | Artist3    | Country3 |
+|        4 | Artist4    | Country4 |
+|        5 | Artist5    | Country5 |
++----------+------------+----------+
+
+
+
+
+Select Queries:
+Retrieve all album titles along with their release years. 
+
+mysql> SELECT Title, ReleaseYear FROM Albums;
++--------+-------------+
+| Title  | ReleaseYear |
++--------+-------------+
+| Album1 |        2021 |
+| Album2 |        2020 |
+| Album3 |        2019 |
+| Album4 |        2022 |
+| Album5 |        2018 |
++--------+-------------+
+
+Display the genres available in the store without repetition. 
+
+mysql> SELECT Genre FROM Albums;
++------------+
+| Genre      |
++------------+
+| Pop        |
+| Rock       |
+| Hip Hop    |
+| Electronic |
+| R&B        |
++------------+
+
+List all artists' names along with their respective countries. 
+
+mysql> SELECT ArtistName, Country FROM Artists;
++------------+----------+
+| ArtistName | Country  |
++------------+----------+
+| Artist1    | Country1 |
+| Artist2    | Country2 |
+| Artist3    | Country3 |
+| Artist4    | Country4 |
+| Artist5    | Country5 |
++------------+----------+
+
+Fetch the album titles released in a specific year.
+
+mysql> SELECT Title, ReleaseYear FROM Albums WHERE ReleaseYear=2019;
++--------+-------------+
+| Title  | ReleaseYear |
++--------+-------------+
+| Album3 |        2019 |
++--------+-------------+
+
+
+Insert Queries:
+Add a new album titled "Greatest Hits" released in the year 2023 to the database with a price of $15 and a stock quantity of 50. 
+
+mysql> INSERT INTO Albums (AlbumID, Title, ReleaseYear, Price, StockQuantity) VALUES (6, 'Greatest Hits', 2023, 15.0, 50);
+mysql> SELECT * FROM Albums;
++---------+---------------+-------------+------------+-------+---------------+
+| AlbumId | Title         | ReleaseYear | Genre      | Price | StockQuantity |
++---------+---------------+-------------+------------+-------+---------------+
+|       1 | Album1        |        2021 | Pop        | 15.99 |           100 |
+|       2 | Album2        |        2020 | Rock       | 12.50 |            75 |
+|       3 | Album3        |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4        |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5        |        2018 | R&B        | 14.25 |            80 |
+|       6 | Greatest Hits |        2023 | NULL       | 15.00 |            50 |
++---------+---------------+-------------+------------+-------+---------------+
+
+
+Insert a new artist named "New Artist" from "Canada" into the Artists table. 
+
+mysql> INSERT INTO Artists VALUES(6, 'New Artist', 'Canada');
+mysql> SELECT * FROM Artists;
++----------+------------+----------+
+| ArtistID | ArtistName | Country  |
++----------+------------+----------+
+|        1 | Artist1    | Country1 |
+|        2 | Artist2    | Country2 |
+|        3 | Artist3    | Country3 |
+|        4 | Artist4    | Country4 |
+|        5 | Artist5    | Country5 |
+|        6 | New Artist | Canada   |
++----------+------------+----------+
+
+
+
+Update Queries:
+Update the price of all albums in the "Pop" genre to $20. 
+
+mysql> UPDATE Albums SET Price=20 WHERE Genre='Pop';
+mysql> SELECT * FROM Albums;
++---------+---------------+-------------+------------+-------+---------------+
+| AlbumId | Title         | ReleaseYear | Genre      | Price | StockQuantity |
++---------+---------------+-------------+------------+-------+---------------+
+|       1 | Album1        |        2021 | Pop        | 20.00 |           100 |
+|       2 | Album2        |        2020 | Rock       | 12.50 |            75 |
+|       3 | Album3        |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4        |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5        |        2018 | R&B        | 14.25 |            80 |
+|       6 | Greatest Hits |        2023 | NULL       | 15.00 |            50 |
++---------+---------------+-------------+------------+-------+---------------+
+
+Increase the stock quantity of the album titled "Thriller" by 10 units.
+
+mysql> mysql> UPDATE Albums SET Title='Thiller' WHERE Genre='Pop';
+mysql> UPDATE Albums SET StockQuantity=10 WHERE Title='Thriller';
+
+mysql> SELECT * FROM Albums;
++---------+---------------+-------------+------------+-------+---------------+
+| AlbumId | Title         | ReleaseYear | Genre      | Price | StockQuantity |
++---------+---------------+-------------+------------+-------+---------------+
+|       1 | Thriller      |        2021 | Pop        | 20.00 |            10 |
+|       2 | Album2        |        2020 | Rock       | 12.50 |            75 |
+|       3 | Album3        |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4        |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5        |        2018 | R&B        | 14.25 |            80 |
+|       6 | Greatest Hits |        2023 | NULL       | 15.00 |            50 |
++---------+---------------+-------------+------------+-------+---------------+
+
+
+Delete Queries:
+Remove an album titled "Dangerous" from the database. 
+
+mysql> UPDATE Albums SET Title= 'Dangerous' WHERE Genre='Rock';
+mysql> SELECT * FROM Albums;
++---------+---------------+-------------+------------+-------+---------------+
+| AlbumId | Title         | ReleaseYear | Genre      | Price | StockQuantity |
++---------+---------------+-------------+------------+-------+---------------+
+|       1 | Thriller      |        2021 | Pop        | 20.00 |            10 |
+|       2 | Dangerous     |        2020 | Rock       | 12.50 |            75 |
+|       3 | Album3        |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4        |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5        |        2018 | R&B        | 14.25 |            80 |
+|       6 | Greatest Hits |        2023 | NULL       | 15.00 |            50 |
++---------+---------------+-------------+------------+-------+---------------+
+
+mysql> DELETE FROM Albums WHERE Title='Dangerous';
+mysql> SELECT * FROM Albums;
++---------+---------------+-------------+------------+-------+---------------+
+| AlbumId | Title         | ReleaseYear | Genre      | Price | StockQuantity |
++---------+---------------+-------------+------------+-------+---------------+
+|       1 | Thriller      |        2021 | Pop        | 20.00 |            10 |
+|       3 | Album3        |        2019 | Hip Hop    | 18.75 |           120 |
+|       4 | Album4        |        2022 | Electronic | 20.00 |            90 |
+|       5 | Album5        |        2018 | R&B        | 14.25 |            80 |
+|       6 | Greatest Hits |        2023 | NULL       | 15.00 |            50 |
++---------+---------------+-------------+------------+-------+---------------+
+
+
+Delete an artist named "Old Artist" from the Artists table.
+
+mysql> UPDATE Artists SET ArtistName= 'Old Artist' WHERE Country='Country1';
+mysql> SELECT * FROM Artists;
++----------+------------+----------+
+| ArtistID | ArtistName | Country  |
++----------+------------+----------+
+|        1 | Old Artist | Country1 |
+|        2 | Artist2    | Country2 |
+|        3 | Artist3    | Country3 |
+|        4 | Artist4    | Country4 |
+|        5 | Artist5    | Country5 |
+|        6 | New Artist | Canada   |
++----------+------------+----------+
+
+
+mysql> DELETE FROM Artists WHERE ArtistName='Old Artist';
+mysql> SELECT * FROM Artists;
++----------+------------+----------+
+| ArtistID | ArtistName | Country  |
++----------+------------+----------+
+|        2 | Artist2    | Country2 |
+|        3 | Artist3    | Country3 |
+|        4 | Artist4    | Country4 |
+|        5 | Artist5    | Country5 |
+|        6 | New Artist | Canada   |
++----------+------------+----------+
+
+
